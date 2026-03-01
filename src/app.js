@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import apiV1Routes from './routes/index.js';
 import { notFoundHandler } from './middleware/notFound.js';
 import { errorHandler } from './middleware/errorHandler.js';
@@ -9,6 +10,9 @@ const app = express();
 
 // Log each request with status and response time.
 app.use(requestLogger);
+
+// Allow frontend app to access API from a different origin in development.
+app.use(cors());
 
 // Parse incoming JSON request bodies.
 app.use(express.json());
