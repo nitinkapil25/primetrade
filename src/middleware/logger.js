@@ -1,0 +1,13 @@
+export const requestLogger = (req, res, next) => {
+  const start = process.hrtime.bigint();
+
+  res.on('finish', () => {
+    const end = process.hrtime.bigint();
+    const durationMs = Number(end - start) / 1_000_000;
+    console.log(
+      `${req.method} ${req.originalUrl} ${res.statusCode} - ${Math.round(durationMs)}ms`
+    );
+  });
+
+  return next();
+};
